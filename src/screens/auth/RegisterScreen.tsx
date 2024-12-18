@@ -4,16 +4,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ButtonComponent, ContainerComponent, InputComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components'
 import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
-import { Sms } from 'iconsax-react-native'
+import { Profile, Sms } from 'iconsax-react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { fontFamilies } from '../../constants/fontFamilies'
 import RowComponent from '../../components/RowComponent'
 import SocialLogin from './components/SocialLogin'
 
-const LoginScreen = ({navigation} : any) => {
+const RegisterScreen = ({navigation} : any) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassWord] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
   const [isRemember, setIsRemember] = useState(true);
 
   return (
@@ -21,24 +22,23 @@ const LoginScreen = ({navigation} : any) => {
       <SectionComponent
         styles={{
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           marginTop: 75,
           marginBottom: 20,
         }}>
-        <Image
-          source={require('../../assets/images/text-logo.png')}
-          style={{
-            width: 162,
-            height: 114,
-          }}
-        />
-      </SectionComponent>
-      <SectionComponent
-        styles={{
-
-        }}>
-        <TextComponent size={24} font={fontFamilies.medium} text='Sign In' />
+        <TextComponent size={24} font={fontFamilies.medium} text='Sign Up' />
         <SpaceComponent height={21} />
+        <InputComponent
+          value={email}
+          placeholder='Full name'
+          onChange={val => setEmail(val)}
+          // isPassword
+          type='email-address'
+          allowClear
+          affix={
+            <Profile size={22} color={appColors.grey} />
+          }
+        />
         <InputComponent
           value={email}
           placeholder='abc@gmail.com'
@@ -64,34 +64,32 @@ const LoginScreen = ({navigation} : any) => {
             />
           }
         />
-        <RowComponent justify="space-between">
-          <RowComponent onPress={() => setIsRemember(!isRemember)}>
-            <Switch
-              value={isRemember}
-              trackColor={{ true: appColors.primary }}
-              thumbColor={appColors.white}
-              onChange={() => setIsRemember(!isRemember)}
+        <InputComponent
+          value={confirmPass}
+          placeholder='Confirm password'
+          onChange={val => setConfirmPass(val)}
+          isPassword
+          allowClear
+          affix={
+            <SimpleLineIcons
+              name='lock'
+              size={22}
+              color={appColors.grey}
             />
-            <TextComponent text='Remember me' />
-          </RowComponent>
-          <ButtonComponent
-            text='Forgot Password?'
-            onPress={() => { }}
-            type='text' />
-        </RowComponent>
+          }
+        />
       </SectionComponent>
-      <SpaceComponent height={16}/>
       <SectionComponent>
-        <ButtonComponent text='SIGN IN' type='primary'/>
+        <ButtonComponent text='SIGN UP' type='primary'/>
       </SectionComponent>
       <SocialLogin/>
       <SectionComponent>
         <RowComponent justify="center">
-        <TextComponent text="Don’t have an account? " />
+        <TextComponent text="Already have an account? " />
           <ButtonComponent
             type="link"
-            text="Sign up"
-            onPress={() => navigation.navigate('RegisterScreen')}
+            text="Sign in"
+            onPress={() => navigation.navigate('LoginScreen')}
           />
         </RowComponent>
       </SectionComponent>
@@ -100,4 +98,4 @@ const LoginScreen = ({navigation} : any) => {
   )
 }
 
-export default LoginScreen
+export default RegisterScreen

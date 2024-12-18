@@ -1,7 +1,10 @@
 import ButtonComponent from "./ButtonComponent";
+import ContainerComponent from "./ContainerComponent";
+import InputComponent from "./InputComponent";
+import SectionComponent from "./SectionComponent";
 import SpaceComponent from "./SpaceComponent";
 import TextComponent from "./TextComponent";
 
 export {
-    SpaceComponent, TextComponent, ButtonComponent,
+    SpaceComponent, TextComponent, ButtonComponent, InputComponent, ContainerComponent, SectionComponent
 }

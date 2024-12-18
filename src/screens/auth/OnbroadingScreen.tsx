@@ -1,6 +1,6 @@
 import { View, Text, ImageBackground, Image, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { globalStyles } from '../../styles/globalStykes'
+import { globalStyles } from '../../styles/globalStyles'
 import Swiper from 'react-native-swiper'
 import { appInfo } from '../../constants/appinfos'
 import { appColors } from '../../constants/appColors'

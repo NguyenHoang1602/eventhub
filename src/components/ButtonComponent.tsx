@@ -1,8 +1,9 @@
 import { View, Text, StyleProp, ViewStyle, TextStyle, TouchableOpacity } from 'react-native'
 import React, { ReactNode } from 'react'
 import TextComponent from './TextComponent';
-import { globalStyles } from '../styles/globalStykes';
+import { globalStyles } from '../styles/globalStyles';
 import { appColors } from '../constants/appColors';
+import { fontFamilies } from '../constants/fontFamilies';
 
 interface Props {
     icon?: ReactNode;
@@ -14,18 +15,21 @@ interface Props {
     textStyle?: StyleProp<TextStyle>;
     onPress?: () => void;
     iconFlex?: 'right' | 'left';
+    textFont?: string;
 }
 const ButtonComponent = (props: Props) => {
 
-    const { icon, text, type, color, styles, textColor, textStyle, onPress, iconFlex } = props;
+    const { icon, text, type, color, styles, textColor, textStyle, onPress, iconFlex, textFont } = props;
 
     return type === 'primary' ? (
 
         <TouchableOpacity onPress={onPress}
             style={[
                 globalStyles.button,
+                globalStyles.shadow,
                 {
                     backgroundColor: color ?? appColors.primary,
+                    marginBottom: 20,
                 },
                 styles]}>
             {icon && icon}
@@ -35,12 +39,16 @@ const ButtonComponent = (props: Props) => {
                 styles={[textStyle,
                     {
                         marginLeft: icon ? 12 : 0,
+                        fontSize: 16,
                     }]}
-                flex={icon && iconFlex === 'right' ? 1 : 0} />
+                flex={icon && iconFlex === 'right' ? 1 : 0} 
+                font={textFont ?? fontFamilies.medium}
+                
+                />
             {icon && iconFlex === 'right' && icon}
         </TouchableOpacity>
     ) : (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <TextComponent text={text} color={type === 'link' ? appColors.link : appColors.text} />
         </TouchableOpacity>
     )
