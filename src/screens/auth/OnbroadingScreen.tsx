@@ -19,8 +19,8 @@ const slides = [
     },
   ]
 const OnbroadingScreen = ({navigation} : any) => {
-
-    const buttonLabel = (label) => {
+   
+    const buttonLabel = (label: string) => {
         return(
           <View style={{
             padding: 12
@@ -36,7 +36,7 @@ const OnbroadingScreen = ({navigation} : any) => {
         )
       }
 
-    const buttonLabel1 = (label) => {
+    const buttonLabel1 = (label : string) => {
         return(
           <View style={{
             padding: 12
