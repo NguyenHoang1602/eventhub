@@ -4,17 +4,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ButtonComponent, ContainerComponent, InputComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components'
 import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
-import { Sms } from 'iconsax-react-native'
+import { ArrowRight, Sms } from 'iconsax-react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import { fontFamilies } from '../../constants/fontFamilies'
 import RowComponent from '../../components/RowComponent'
 import SocialLogin from './components/SocialLogin'
+import authenticationAPI from '../../api/authApi'
 
-const LoginScreen = ({navigation} : any) => {
+const LoginScreen = ({ navigation }: any) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassWord] = useState('');
   const [isRemember, setIsRemember] = useState(true);
+
+  const handleLogin = async () => {
+    try {
+     const res = await authenticationAPI.HandleAuthentication('/hello');
+      console.log(res);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <ContainerComponent isImageBackground isScroll>
@@ -76,21 +87,28 @@ const LoginScreen = ({navigation} : any) => {
           </RowComponent>
           <ButtonComponent
             text='Forgot Password?'
-            onPress={() => { }}
-            type='text' />
+            onPress={() => navigation.navigate('ForgotPassword')}
+            type='text'
+          />
         </RowComponent>
       </SectionComponent>
-      <SpaceComponent height={16}/>
+      <SpaceComponent height={16} />
       <SectionComponent>
-        <ButtonComponent text='SIGN IN' type='primary'/>
+        <ButtonComponent
+          text='SIGN IN'
+          type='primary'
+          icon={<ArrowRight size={20} color={appColors.white} />}
+          iconFlex='right'
+          onPress={handleLogin}
+        />
       </SectionComponent>
-      <SocialLogin/>
+      <SocialLogin />
       <SectionComponent>
         <RowComponent justify="center">
-        <TextComponent text="Don’t have an account? " />
+          <TextComponent text="Don’t have an account? " />
           <ButtonComponent
             type="link"
-            text="Sign up"
+            text="SIGN UP"
             onPress={() => navigation.navigate('RegisterScreen')}
           />
         </RowComponent>

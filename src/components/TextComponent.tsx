@@ -29,10 +29,10 @@ const TextComponent = (props: Props) => {
                 fontFamily: font
                     ? font
                     : title
-                        ? fontFamilies.medium
-                        : fontFamilies.regular,
+                    ? fontFamilies.medium
+                    : fontFamilies.regular,
             },
-            styles
+            styles,
         ]}>{text}</Text>
 }
 export default TextComponent
