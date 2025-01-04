@@ -31,7 +31,7 @@ const ButtonComponent = (props: Props) => {
                     globalStyles.shadow,
                     {
                         backgroundColor: color ?? appColors.primary,
-                        marginBottom: 20,
+                        marginBottom: 10,
                         width: '85%'
                     },
                     styles]}>

@@ -16,7 +16,7 @@ const SocialLogin = () => {
                 size={16}
                 font={fontFamilies.medium}
             />
-            <SpaceComponent height={16}/>
+            <SpaceComponent height={20}/>
             <ButtonComponent
                 type="primary"
                 color={appColors.white}
