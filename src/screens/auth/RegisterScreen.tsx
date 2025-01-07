@@ -14,6 +14,8 @@ import authenticationAPI from '../../api/authApi'
 import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { addAuth } from '../../redux/reducers/authReducer'
 
 
 interface Errors {
@@ -25,15 +27,25 @@ const RegisterScreen = ({ navigation }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
 
+  const dispatch = useDispatch();
+
 
   const handleRegister = async (values: any) => {
     setIsLoading(true);
     try {
-      const res = await authenticationAPI.HandleAuthentication('/register',values, 'post');
+      const res = await authenticationAPI.HandleAuthentication('/register',
+        {
+          fullName: values.userName,
+          email: values.email,
+          password: values.password
+        }, 'post');
+        
+      dispatch(addAuth(res));
       console.log(res);
+      await AsyncStorage.setItem('auth', JSON.stringify(res));
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log(error);  
       setIsLoading(false);
     }
 
