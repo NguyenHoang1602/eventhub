@@ -8,9 +8,7 @@ import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-s
   
   const AppRouters = () => {
     const [isShowSplash, setIsShowSplash] = useState(true);
-  
     const {getItem} = useAsyncStorage('auth');
-  
     const auth = useSelector(authSelector);
     const dispatch = useDispatch();
   
@@ -25,12 +23,9 @@ import AsyncStorage, {useAsyncStorage} from '@react-native-async-storage/async-s
   
     const checkLogin = async () => {
       const res = await getItem();
-  
+      console.log("data: ",res);
       res && dispatch(addAuth(JSON.parse(res)));
     };
-    console.log(auth.assetToken);
-    
-  
     return (
       <>
         {isShowSplash ? (

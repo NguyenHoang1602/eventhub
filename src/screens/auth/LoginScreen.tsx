@@ -2,7 +2,6 @@ import { View, Image, Switch } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ButtonComponent, CInputComponents, ContainerComponent, InputComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components'
-import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
 import { ArrowRight, Sms } from 'iconsax-react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -14,12 +13,13 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 import { LoadingModal } from '../../modals'
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useDispatch } from 'react-redux'
+import { addAuth } from '../../redux/reducers/authReducer'
 
 const LoginScreen = ({ navigation }: any) => {
-
   const [isRemember, setIsRemember] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   const form = useForm({
     defaultValues: {
       email: '',
@@ -30,10 +30,10 @@ const LoginScreen = ({ navigation }: any) => {
         email: yup.string().email('Email không hợp lệ!').required('Vui lòng nhập email!'),
         password: yup.string()
           .required("Vui lòng nhập mật khẩu!")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-            "Phải chứa 8 ký tự, một chữ hoa, một chữ thường, một số và một ký tự đặc biệt"
-          )
+        // .matches(
+        //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        //   "Phải chứa 8 ký tự, một chữ hoa, một chữ thường, một số và một ký tự đặc biệt"
+        // )
       })
     )
   })
@@ -41,9 +41,16 @@ const LoginScreen = ({ navigation }: any) => {
   const handleLogin = async (values: any) => {
     setIsLoading(true);
     try {
-      const res = await authenticationAPI.HandleAuthentication('/login', values, 'post');
-      console.log(res);
-      setIsLoading(false);
+      const res = await authenticationAPI.HandleAuthentication('/login',
+        {
+          email: values.email,
+          password: values.password
+        }, 'post');
+        dispatch(addAuth(res));
+        console.log(res);
+        await AsyncStorage.setItem('auth', isRemember ?  JSON.stringify(res) : values.email);
+        await AsyncStorage.setItem('isFirstAccess', '1');
+        setIsLoading(false);
     } catch (error) {
       console.log(error);
       setIsLoading(false);

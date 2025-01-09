@@ -2,7 +2,6 @@ import { View, Image, Switch, Keyboard } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ButtonComponent, CInputComponents, ContainerComponent, InputComponent, SectionComponent, SpaceComponent, TextComponent } from '../../components'
-import { globalStyles } from '../../styles/globalStyles'
 import { appColors } from '../../constants/appColors'
 import { ArrowRight, Profile, Sms } from 'iconsax-react-native'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -17,20 +16,16 @@ import * as yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { addAuth } from '../../redux/reducers/authReducer'
 
-
-interface Errors {
-  [key: string]: string;
-}
-
 const RegisterScreen = ({ navigation }: any) => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Errors>({});
+  
 
   const dispatch = useDispatch();
 
 
   const handleRegister = async (values: any) => {
+    Keyboard.dismiss();
     setIsLoading(true);
     try {
       const res = await authenticationAPI.HandleAuthentication('/register',
